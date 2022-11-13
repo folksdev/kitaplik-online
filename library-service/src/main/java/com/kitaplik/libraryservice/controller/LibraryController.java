@@ -1,5 +1,6 @@
 package com.kitaplik.libraryservice.controller;
 
+import com.kitaplik.libraryservice.config.VaultConfig;
 import com.kitaplik.libraryservice.dto.AddBookRequest;
 import com.kitaplik.libraryservice.dto.LibraryDto;
 import com.kitaplik.libraryservice.service.LibraryService;
@@ -22,12 +23,15 @@ public class LibraryController {
     private final LibraryService libraryService;
     private final Environment environment;
 
-    @Value("${library.service.count}")
-    private String count;
+    private final VaultConfig vaultConfig;
 
-    public LibraryController(LibraryService libraryService, Environment environment) {
+    @Value("${library-service.book.count}")
+    private Integer bookCount;
+
+    public LibraryController(LibraryService libraryService, Environment environment, VaultConfig vaultConfig) {
         this.libraryService = libraryService;
         this.environment = environment;
+        this.vaultConfig = vaultConfig;
     }
 
     @GetMapping("{id}")
@@ -55,7 +59,9 @@ public class LibraryController {
 
     @GetMapping("/count")
     public ResponseEntity<String> getCount() {
-        return ResponseEntity.ok("Library count is" + count);
+        String s = "Library count is from VaultConfig is " + vaultConfig.getCount() + "\n" +
+                "Library count is from application properties is " + bookCount;
+        return ResponseEntity.ok(s);
     }
 
 }
