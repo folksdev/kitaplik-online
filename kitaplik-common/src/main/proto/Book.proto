@@ -1,0 +1,17 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.kitaplik.bookservice.dto;
+
+message BookId {
+  string bookId = 1;
+  string isbn = 2;
+}
+
+message Isbn {
+  string isbn = 1;
+}
+
+
+service BookService {
+  rpc getBookIdByIsbn(Isbn) returns (BookId);
+}
