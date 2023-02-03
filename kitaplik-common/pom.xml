@@ -5,10 +5,11 @@
 
 	<groupId>com.kitaplik</groupId>
 	<artifactId>kitaplik-common</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
 	<name>kitaplik-common</name>
 
-	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 
 	<description>Demo project for Spring Boot</description>
@@ -35,7 +36,6 @@
 			<artifactId>grpc-protobuf</artifactId>
 			<version>${grpc.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>

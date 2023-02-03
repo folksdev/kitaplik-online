@@ -45,8 +45,7 @@ public class BookServiceApplication implements CommandLineRunner {
 		return serverBuilder -> {
 			if (serverBuilder instanceof NettyServerBuilder) {
 				((NettyServerBuilder) serverBuilder).keepAliveTime(30, TimeUnit.SECONDS)
-						.keepAliveTimeout(5, TimeUnit.SECONDS)
-						.permitKeepAliveWithoutCalls(true);
+						.keepAliveTimeout(5, TimeUnit.SECONDS).permitKeepAliveWithoutCalls(true);
 			}
 		};
 	}

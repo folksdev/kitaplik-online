@@ -1,9 +1,9 @@
 package com.kitaplik.bookservice.service;
 
-import com.kitaplik.bookservice.BookId;
-import com.kitaplik.bookservice.BookServiceGrpc;
-import com.kitaplik.bookservice.Isbn;
+import com.kitaplik.bookservice.dto.BookId;
 import com.kitaplik.bookservice.dto.BookIdDto;
+import com.kitaplik.bookservice.dto.BookServiceGrpc;
+import com.kitaplik.bookservice.dto.Isbn;
 import com.kitaplik.bookservice.exception.BookNotFoundException;
 import com.kitaplik.bookservice.repository.BookRepository;
 import io.grpc.stub.StreamObserver;
@@ -22,18 +22,16 @@ public class BookGrpcServiceImpl extends BookServiceGrpc.BookServiceImplBase {
     }
 
     @Override
-    public void getBookIdByIsbn(Isbn request, StreamObserver<BookId> responseObserver) {
-        logger.info("Grpc call received: " + request.getIsbn());
-        BookIdDto bookIdDto = bookRepository.getBookByIsbn(request.getIsbn())
+    public void getBookIdByIsbn(Isbn isbn, StreamObserver<BookId> responseObserver) {
+        logger.info("Grpc call received: " + isbn.getIsbn());
+        BookIdDto bookId = bookRepository.getBookByIsbn(isbn.getIsbn())
                 .map(book -> new BookIdDto(book.getId(), book.getIsbn()))
-                .orElseThrow(() -> new BookNotFoundException("Book could not found by isbn: " + request.getIsbn()));
+                .orElseThrow(() -> new BookNotFoundException("Book could not found by isbn: " + isbn));
         responseObserver.onNext(
                 BookId.newBuilder()
-                        .setBookId(bookIdDto.getBookId())
-                        .setIsbn(bookIdDto.getIsbn())
-                        .build()
-        );
-
+                        .setBookId(bookId.getBookId())
+                        .setIsbn(bookId.getIsbn())
+                        .build());
         responseObserver.onCompleted();
     }
 }
